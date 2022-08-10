@@ -1,0 +1,50 @@
+﻿@model HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="text-center">
+        <h1 class="display-6">Hello, @User.Identity.Name</h1>
+    </div>
+
+    @using (Html.BeginForm("Index", "Home"))
+    {
+
+        <div class="input-group mb-3">
+          <input type="text" required="required" name="code" value="@Model.SearchProductCode" class="form-control" placeholder="Product Code" aria-label="Product Code" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Search</button>
+          </div>
+        </div>
+
+    }
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (var product in Model.Products)
+        {  
+        <tr>  
+            <td class="align-middle">@product.Id</td>  
+            <td class="align-middle">@product.Name</td>  
+            <td class="align-middle">@product.Code</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Sign In to search <strong>Products</strong></p>
+    </div>
+}
